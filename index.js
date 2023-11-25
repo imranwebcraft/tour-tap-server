@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 
 // --------- Get Route ------------//
 const packageRoutes = require('./routes/packageRoute');
+const tourGuideRoute = require('./routes/tourGuideRoute');
+const storyRoute = require('./routes/storyRoute');
 
 // ------------APP Variable-----------//
 const app = express();
@@ -16,6 +18,8 @@ app.use(express.json());
 
 // --------- Use all Routes------------//
 app.use(packageRoutes);
+app.use(tourGuideRoute);
+app.use(storyRoute);
 
 // ------------ MongoDB Database Connection--------------//
 const mongoURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.7o1h45b.mongodb.net/?retryWrites=true&w=majority`;
