@@ -2,6 +2,11 @@ const express = require('express');
 const port = process.env.PORT || 5000;
 const cors = require('cors');
 require('dotenv').config();
+const mongoose = require('mongoose');
+
+// --------- Get Route ------------//
+const packageRoutes = require('./routes/packageRoute');
+
 // ------------APP Variable-----------//
 const app = express();
 
@@ -9,41 +14,37 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// --------- Use all Routes------------//
+app.use(packageRoutes);
+
 // ------------ MongoDB Database Connection--------------//
-
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.7o1h45b.mongodb.net/?retryWrites=true&w=majority`;
-
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-	serverApi: {
-		version: ServerApiVersion.v1,
-		strict: true,
-		deprecationErrors: true,
-	},
-});
-
-async function run() {
-	try {
-		// Connect the client to the server	(optional starting in v4.7)
-		// await client.connect();
-		//------PING-----------//
-		await client.db('admin').command({ ping: 1 });
-		console.log(
-			'Pinged your deployment. You successfully connected to MongoDB!'
-		);
-	} finally {
-		// Ensures that the client will close when you finish/error
-		// await client.close();
-	}
-}
-run().catch(console.dir);
+const mongoURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.7o1h45b.mongodb.net/?retryWrites=true&w=majority`;
 
 // --------------Simple API Test ----------//
 app.get('/', (req, res) => {
-	res.send('Tour-Tap Server is runnign');
+	res.send('Tour-Tap server is running....');
 });
 
-app.listen(port, () => {
-	console.log(`Tour-Tap app listening on port ${port}`);
+// handling all (get,post,update,delete.....) unhandled routes
+app.all('*', (req, res, next) => {
+	const error = new Error(`Can't find ${req.originalUrl} on the server`);
+	error.status = 404;
+	next(error);
 });
+
+app.use((err, _req, res, _next) => {
+	res.status(err.status || 500).json({
+		message: err.message,
+		errors: err.errors,
+	});
+});
+
+const main = async () => {
+	console.log('connecting to database');
+	await mongoose.connect(mongoURI, { dbName: process.env.DB_NAME });
+	console.log('connected to database');
+	app.listen(port, () => {
+		console.log(`Tour-Tap server is listening on PORT ${port}`);
+	});
+};
+main();
