@@ -11,6 +11,8 @@ const storyRoute = require('./routes/storyRoute');
 const usesrRoute = require('./routes/userRoute');
 const wishlistRouter = require('./routes/wishlistRouter');
 const bookPackageRouter = require('./routes/bookpackageRoute');
+const commentRoute = require('./routes/commentRoute');
+
 // ------------APP Variable-----------//
 const app = express();
 
@@ -25,6 +27,8 @@ app.use(storyRoute);
 app.use(usesrRoute);
 app.use(wishlistRouter);
 app.use(bookPackageRouter);
+app.use(commentRoute);
+
 // ------------ MongoDB Database Connection--------------//
 const mongoURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.7o1h45b.mongodb.net/?retryWrites=true&w=majority`;
 
