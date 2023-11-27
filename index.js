@@ -9,6 +9,7 @@ const packageRoutes = require('./routes/packageRoute');
 const tourGuideRoute = require('./routes/tourGuideRoute');
 const storyRoute = require('./routes/storyRoute');
 const usesrRoute = require('./routes/userRoute');
+const wishlistRouter = require('./routes/wishlistRouter');
 // ------------APP Variable-----------//
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(packageRoutes);
 app.use(tourGuideRoute);
 app.use(storyRoute);
 app.use(usesrRoute);
+app.use(wishlistRouter);
 // ------------ MongoDB Database Connection--------------//
 const mongoURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.7o1h45b.mongodb.net/?retryWrites=true&w=majority`;
 
