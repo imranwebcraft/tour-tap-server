@@ -6,7 +6,6 @@ const router = express.Router();
 const Comment = require('../models/comment');
 
 // get all comments by email
-
 router.get('/comments/:email', async (req, res) => {
 	try {
 		const comments = await Comment.find({ email: req.params.email });

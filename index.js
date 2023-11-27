@@ -12,13 +12,17 @@ const usesrRoute = require('./routes/userRoute');
 const wishlistRouter = require('./routes/wishlistRouter');
 const bookPackageRouter = require('./routes/bookpackageRoute');
 const commentRoute = require('./routes/commentRoute');
+const authenticationRoute = require('./routes/authentication');
+const applyMiddleware = require('./middlewares/simpleMiddleware.js');
 
 // ------------APP Variable-----------//
 const app = express();
 
 // -----------Simple Middleeare--------//
-app.use(cors());
-app.use(express.json());
+// app.use(cors());
+// app.use(express.json());
+applyMiddleware(app);
+
 // --------- Use all Routes------------//
 app.use(packageRoutes);
 app.use(tourGuideRoute);
@@ -27,6 +31,7 @@ app.use(usesrRoute);
 app.use(wishlistRouter);
 app.use(bookPackageRouter);
 app.use(commentRoute);
+app.use(authenticationRoute);
 
 // ------------ MongoDB Database Connection--------------//
 const mongoURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.7o1h45b.mongodb.net/?retryWrites=true&w=majority`;
