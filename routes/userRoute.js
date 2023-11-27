@@ -5,10 +5,16 @@ const router = express.Router();
 const User = require('../models/users');
 
 // Get all users
-
 router.get('/users', async (req, res) => {
 	const users = await User.find();
 	res.send(users);
+});
+
+// get specific user by email address
+
+router.get('/users/:email', async (req, res) => {
+	const user = await User.findOne({ email: req.params.email });
+	res.send(user.role);
 });
 
 // Post a new user

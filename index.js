@@ -19,7 +19,6 @@ const app = express();
 // -----------Simple Middleeare--------//
 app.use(cors());
 app.use(express.json());
-
 // --------- Use all Routes------------//
 app.use(packageRoutes);
 app.use(tourGuideRoute);

@@ -29,10 +29,10 @@ router.get('/package/:id', async (req, res) => {
 
 // The error you're encountering is due to Mongoose attempting to cast the tourType value to an ObjectId, which is the default behavior when using findById or similar methods. To resolve this issue, you can modify your query to use a case-insensitive regular expression for filtering by tourType. This way, you can find documents where the tourType field matches the provided value without casting it to an ObjectId.
 
-router.get('/package/:tourType', async (req, res) => {
+router.get('/package/tour/:tourType', async (req, res) => {
 	try {
 		const tourType = req.params.tourType;
-		const filter = { tourType: { $regex: new RegExp(tourType, 'i') } };
+		const filter = { tourType: tourType };
 		const packages = await Package.find(filter);
 		res.send(packages);
 	} catch (error) {
