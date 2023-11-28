@@ -28,19 +28,6 @@ router.get('/tourGuide/:id', async (req, res) => {
 	}
 });
 
-// get single tour guide by name
-router.get('/tourGuide/name/:name', async (req, res) => {
-	try {
-		const tourGuides = await TourGuide.find({
-			name: req.params.name,
-		});
-		res.send(tourGuides);
-	} catch (error) {
-		console.error('Error saving package:', error);
-		res.status(500).send('Internal Server Error');
-	}
-});
-
 // Post a single tour guide ---> Object of tour guide
 router.post('/tourGuide', async (req, res) => {
 	try {

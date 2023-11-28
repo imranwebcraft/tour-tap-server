@@ -30,6 +30,19 @@ router.get('/book-package/:email', async (req, res) => {
 	}
 });
 
+// get matched tour guide by name
+router.get('/book-package/name/:name', async (req, res) => {
+	try {
+		const tourGuides = await BookPackage.find({
+			tourGuideName: req.params.name,
+		});
+		res.send(tourGuides);
+	} catch (error) {
+		console.error('Error saving package:', error);
+		res.status(500).send('Internal Server Error');
+	}
+});
+
 // Post a booking data
 
 router.post('/book-package', async (req, res) => {
