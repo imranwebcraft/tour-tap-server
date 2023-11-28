@@ -6,7 +6,6 @@ const router = express.Router();
 const BookPackage = require('../models/bookPaackage');
 
 // get all booking data
-
 router.get('/book-package', async (req, res) => {
 	try {
 		const packages = await BookPackage.find();
@@ -17,20 +16,22 @@ router.get('/book-package', async (req, res) => {
 	}
 });
 
-// get all matched booking data based on touristEmail
-router.get('/book-package', async (req, res) => {
+// get all matching booking data based on email address
+
+router.get('/book-package/:email', async (req, res) => {
 	try {
-		const touristEmail = req.params.touristEmail;
-		const filter = { touristEmail: { $regex: new RegExp(touristEmail, 'i') } };
-		const packages = await BookPackage.find(filter);
+		const packages = await BookPackage.find({
+			touristEmail: req.params.email,
+		});
 		res.send(packages);
 	} catch (error) {
-		console.error('Error finding package:', error);
+		console.error('Error saving package:', error);
 		res.status(500).send('Internal Server Error');
 	}
 });
 
 // Post a booking data
+
 router.post('/book-package', async (req, res) => {
 	try {
 		const newPackage = new BookPackage(req.body);

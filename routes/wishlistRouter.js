@@ -29,4 +29,16 @@ router.get('/wishlist/:email', async (req, res) => {
 	}
 });
 
+// delete a wishlist by id
+
+router.delete('/wishlist/:id', async (req, res) => {
+	try {
+		const deletedResult = await Wishlist.findByIdAndDelete(req.params.id);
+		res.send(deletedResult);
+	} catch (error) {
+		console.error('Error deleting wishlist:', error);
+		res.status(500).send('Internal Server Error');
+	}
+});
+
 module.exports = router;

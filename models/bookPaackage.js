@@ -8,7 +8,7 @@ const bookPackageSchema = new mongoose.Schema({
 	date: String,
 	status: String,
 
-	tourGuideEmail: String,
+	tourGuideName: String,
 
 	image: String,
 	tripTitle: String,

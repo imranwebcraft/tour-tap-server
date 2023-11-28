@@ -31,7 +31,7 @@ router.get('/package/tour/:tourType', async (req, res) => {
 		const tourType = req.params.tourType;
 		const filter = { tourType: tourType };
 		const packages = await Package.find(filter);
-		res.send('Save successfull', packages);
+		res.send(packages);
 	} catch (error) {
 		console.error('Error finding package:', error);
 		res.status(500).send('Internal Server Error');

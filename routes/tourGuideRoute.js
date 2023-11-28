@@ -18,7 +18,6 @@ router.get('/tourGuide', async (req, res) => {
 });
 
 // get signle tour guide
-
 router.get('/tourGuide/:id', async (req, res) => {
 	try {
 		const tourGuide = await TourGuide.findById(req.params.id);
@@ -29,13 +28,25 @@ router.get('/tourGuide/:id', async (req, res) => {
 	}
 });
 
-// Post a tour guide ---> Object of tour guide
+// get single tour guide by name
+router.get('/tourGuide/name/:name', async (req, res) => {
+	try {
+		const tourGuides = await TourGuide.find({
+			name: req.params.name,
+		});
+		res.send(tourGuides);
+	} catch (error) {
+		console.error('Error saving package:', error);
+		res.status(500).send('Internal Server Error');
+	}
+});
 
+// Post a single tour guide ---> Object of tour guide
 router.post('/tourGuide', async (req, res) => {
 	try {
 		const newTourGuide = new TourGuide(req.body);
-		await newTourGuide.save();
-		res.send('Tour Guide saved');
+		const result = await newTourGuide.save();
+		res.send(result);
 	} catch (error) {
 		console.error('Error saving package:', error);
 		res.status(500).send('Internal Server Error');
