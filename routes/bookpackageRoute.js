@@ -30,6 +30,43 @@ router.get('/book-package/:email', async (req, res) => {
 	}
 });
 
+//delete a specific booking data by id
+
+router.delete('/book-package/:id', async (req, res) => {
+	const packageId = req.params.id;
+	try {
+		const deletedPackage = await BookPackage.findByIdAndDelete(packageId);
+		res.send('Delete Successfull!');
+		if (!deletedPackage) {
+			return res.status(404).json({ message: 'Package not found' });
+		}
+	} catch (error) {
+		console.error('Error deleting package:', error);
+		res.status(500).json({ message: 'Internal Server Error' });
+	}
+});
+
+// get specific booking data based on id and updated booking
+
+router.patch('/book-package/:id', async (req, res) => {
+	const packageId = req.params.id;
+	const newStatus = req.body.status;
+	try {
+		const updatedPackage = await BookPackage.findByIdAndUpdate(
+			packageId,
+			{ $set: { status: newStatus } },
+			{ new: true, useFindAndModify: false }
+		);
+		res.send(updatedPackage);
+		if (!updatedPackage) {
+			return res.status(404).json({ message: 'Package not found' });
+		}
+	} catch (error) {
+		console.error('Error updating package:', error);
+		res.status(500).json({ message: 'Internal Server Error' });
+	}
+});
+
 // get matched tour guide by name
 router.get('/book-package/name/:name', async (req, res) => {
 	try {
