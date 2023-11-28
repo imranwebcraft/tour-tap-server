@@ -31,7 +31,6 @@ router.get('/book-package/:email', async (req, res) => {
 });
 
 //delete a specific booking data by id
-
 router.delete('/book-package/:id', async (req, res) => {
 	const packageId = req.params.id;
 	try {
